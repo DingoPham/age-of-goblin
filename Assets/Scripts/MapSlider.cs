@@ -7,19 +7,29 @@ public class MapSlider : MonoBehaviour
     public RectTransform mapContainer;  // Gắn MapContainer vào đây
     public float slideSpeed = 500f;     // Tốc độ trượt (pixel/giây)
     public float mapWidth = 960f;       // Chiều rộng mỗi map
-    public TMP_Text dialogueText; // Gắn DialogueText trong Content vào đây
-    public ScrollRect scrollView; // Gắn DialogueScrollView vào đây
+    public TMP_Text dialogueText;       // Gắn DialogueText trong Content vào đây
+    public TMP_Text missionNameText;    // Gắn MissionNameText vào đây (mới thêm)
+    public ScrollRect scrollView;       // Gắn DialogueScrollView vào đây
 
     private int currentMapIndex = 0;    // Map hiện tại (0 = Map1, 1 = Map2, ...)
     private int totalMaps;              // Tổng số map
     private Vector2 targetPosition;     // Vị trí mục tiêu khi trượt
     private bool isSliding = false;     // Đang trượt hay không
 
+    // Mảng chứa hội thoại của từng bản đồ
     private string[] mapDialogues = new string[]
     {
         "Đây là Rừng Xanh, nơi Goblin ẩn nấp trong bóng tối. Câu chuyện dài dòng về khu rừng này bắt đầu từ hàng trăm năm trước khi một trận chiến kinh hoàng diễn ra...",
         "Đồng Bằng Vàng, vùng đất giàu tài nguyên của Con người. Nơi đây từng là chiến trường giữa các vương quốc cổ đại, giờ chỉ còn lại những cánh đồng trải dài bất tận và những mỏ vàng lấp lánh.",
         "Núi Đá Đen, pháo đài bất khả xâm phạm của chiến tranh. Truyền thuyết kể rằng một vị thần đã nguyền rủa ngọn núi này, khiến nó trở thành nơi trú ẩn của những sinh vật kỳ bí."
+    };
+
+    // Mảng chứa tên nhiệm vụ của từng bản đồ (mới thêm)
+    private string[] mapMissionNames = new string[]
+    {
+        "Rừng Xanh",
+        "Đồng Bằng Vàng",
+        "Núi Đá Đen"
     };
 
     void Start()
@@ -88,11 +98,25 @@ public class MapSlider : MonoBehaviour
 
     private void UpdateDialogue()
     {
+        // Cập nhật hội thoại
         if (currentMapIndex >= 0 && currentMapIndex < mapDialogues.Length)
         {
             dialogueText.text = mapDialogues[currentMapIndex];
             // Reset scroll về đầu khi đổi nội dung
             scrollView.verticalNormalizedPosition = 1f;
+        }
+
+        // Cập nhật tên nhiệm vụ (mới thêm)
+        if (currentMapIndex >= 0 && currentMapIndex < mapMissionNames.Length)
+        {
+            if (missionNameText != null)
+            {
+                missionNameText.text = mapMissionNames[currentMapIndex];
+            }
+            else
+            {
+                Debug.LogWarning("MissionNameText is not assigned in the Inspector!");
+            }
         }
     }
 }

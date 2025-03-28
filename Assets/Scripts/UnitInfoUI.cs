@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using TMPro;
+using static TerrainEffect;
 
 public class UnitInfoUI : MonoBehaviour
 {

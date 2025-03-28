@@ -38,6 +38,25 @@ public class LightWarship : Unit
         }
     }
 
+    // Ghi đè AdjustTerrainEffect để điều chỉnh moveCost cho tàu chiến
+    protected override TerrainEffect AdjustTerrainEffect(TerrainEffect effect, TerrainType terrainType)
+    {
+        if (terrainType == TerrainType.Sea)
+        {
+            effect.MoveCost = 1f; // Di chuyển bình thường trên biển
+        }
+        else if (terrainType == TerrainType.DeepSea)
+        {
+            effect.MoveCost = 1.2f; // Di chuyển hơi chậm hơn trên DeepSea
+        }
+        else
+        {
+            effect.MoveCost = float.MaxValue; // Không thể di chuyển trên đất liền
+        }
+
+        return effect;
+    }
+
     protected override void TakeDeepSeaDamage()
     {
         // Thuyền chiến không chịu sát thương từ DeepSea
